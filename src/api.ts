@@ -18,7 +18,7 @@ export async function getWeather({
     );
     const data = await result.json();
     console.log(data);
-    console.log(weatherSchema.parse(data));
+    // console.log(weatherSchema.parse(data));
     // return data;
     return weatherSchema.parse(data);
   } catch (error) {

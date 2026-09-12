@@ -9,7 +9,7 @@ type Props = {
   title: string;
 };
 
-export default function DailyForecast({ title }: Props) {
+export default function HourlyForecast({ title }: Props) {
   const { data } = useSuspenseQuery({
     queryKey: ["weather"],
     queryFn: () => getWeather({ lat: 50, lon: 50 }) as Promise<WeatherSchema>,
@@ -17,21 +17,21 @@ export default function DailyForecast({ title }: Props) {
 
   return (
     <Card title={title}>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-      <div className="flex flex-row gap-12">
-        {data?.daily?.map((day) => (
-          <div className="flex flex-col items-center w-24" key={day.dt}>
+      <div className="flex flex-row gap-12 overflow-x-scroll scrollbar-gutter-stable">
+        {data?.hourly?.map((hour) => (
+          <div className="flex flex-col items-center w-16" key={hour.dt}>
+            <p>{Math.round(hour.temp)}°C</p>
             <WeatherIcon
-              icon={day.weather[0].icon}
-              description={day.weather[0].description}
+              icon={hour.weather[0].icon}
+              description={hour.weather[0].description}
             />
             <p>
-              {new Date(day.dt * 1000).toLocaleDateString(undefined, {
-                weekday: "short",
+              {new Date(hour.dt * 1000).toLocaleTimeString(undefined, {
+                hour: "2-digit",
+                minute: "2-digit",
               })}
             </p>
-            <p>{Math.round(day.temp.day)}°C</p>
-            <p>{day.weather[0].description}</p>
+            {/* <p>{hour.weather[0].description}</p> */}
           </div>
         ))}
       </div>
