@@ -2,17 +2,18 @@ import Card from "./Card";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getWeather } from "../../api";
 import type { WeatherSchema } from "../../schemas/weatherSchema";
+import type { WeatherComponent } from "../../types";
 import WeatherIcon from "../WeatherIcon";
 
-type Props = {
-  //   children?: React.ReactNode;
-  title: string;
-};
-
-export default function CurrentWeather({ title }: Props) {
+export default function CurrentWeather({ title, coords }: WeatherComponent) {
+  const { lat, lon } = coords;
   const { data } = useSuspenseQuery({
-    queryKey: ["weather"],
-    queryFn: () => getWeather({ lat: 50, lon: 50 }) as Promise<WeatherSchema>,
+    queryKey: ["weather", lat, lon],
+    queryFn: () =>
+      getWeather({
+        lat,
+        lon,
+      }) as Promise<WeatherSchema>,
   });
 
   return (

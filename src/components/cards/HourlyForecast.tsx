@@ -3,29 +3,30 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getWeather } from "../../api";
 import type { WeatherSchema } from "../../schemas/weatherSchema";
 import WeatherIcon from "../WeatherIcon";
+import type { WeatherComponent } from "../../types";
 
-type Props = {
-  //   children?: React.ReactNode;
-  title: string;
-};
-
-export default function HourlyForecast({ title }: Props) {
+export default function HourlyForecast({ title, coords }: WeatherComponent) {
+  const { lat, lon } = coords;
   const { data } = useSuspenseQuery({
-    queryKey: ["weather"],
-    queryFn: () => getWeather({ lat: 50, lon: 50 }) as Promise<WeatherSchema>,
+    queryKey: ["weather", lat, lon],
+    queryFn: () =>
+      getWeather({
+        lat,
+        lon,
+      }) as Promise<WeatherSchema>,
   });
 
   return (
     <Card title={title}>
-      <div className="flex flex-row gap-12 overflow-x-scroll scrollbar-gutter-stable">
+      <div className="flex flex-row gap-10 overflow-x-scroll scrollbar-gutter-stable">
         {data?.hourly?.map((hour) => (
-          <div className="flex flex-col items-center w-16" key={hour.dt}>
-            <p>{Math.round(hour.temp)}°C</p>
+          <div className="flex flex-col items-center min-w-20" key={hour.dt}>
+            <p className="text-xl font-semibold">{Math.round(hour.temp)}°C</p>
             <WeatherIcon
               icon={hour.weather[0].icon}
               description={hour.weather[0].description}
             />
-            <p>
+            <p className="text-zinc-400">
               {new Date(hour.dt * 1000).toLocaleTimeString(undefined, {
                 hour: "2-digit",
                 minute: "2-digit",

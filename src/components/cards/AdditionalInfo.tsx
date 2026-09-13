@@ -3,11 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getWeather } from "../../api";
 import type { WeatherSchema } from "../../schemas/weatherSchema";
 // import WeatherIcon from "../WeatherIcon";
-
-type Props = {
-  //   children?: React.ReactNode;
-  title: string;
-};
+import type { WeatherComponent } from "../../types";
 
 type FormatComponentProps = {
   value: string;
@@ -41,10 +37,15 @@ const rows = [
   },
 ] as const;
 
-export default function AdditionalInfo({ title }: Props) {
+export default function AdditionalInfo({ title, coords }: WeatherComponent) {
+  const { lat, lon } = coords;
   const { data } = useSuspenseQuery({
-    queryKey: ["weather"],
-    queryFn: () => getWeather({ lat: 50, lon: 50 }) as Promise<WeatherSchema>,
+    queryKey: ["weather", lat, lon],
+    queryFn: () =>
+      getWeather({
+        lat,
+        lon,
+      }) as Promise<WeatherSchema>,
   });
   return (
     <Card title={title}>
