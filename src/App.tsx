@@ -11,9 +11,11 @@ import DailyForecast from "./components/cards/DailyForecast";
 import HourlyForecast from "./components/cards/HourlyForecast";
 import AdditionalInfo from "./components/cards/AdditionalInfo";
 import LocationDropdown from "./components/dropdowns/LocationDropdown";
-import type { Geocode } from "./schemas/geocodeSchema";
+// import type { Geocode } from "./schemas/geocodeSchema";
 import type { Coords } from "./types";
 import { getGeocode } from "./api";
+import MapTypeDropdown from "./components/dropdowns/MapTypeDropdown";
+import MapLegend from "./components/MapLegend";
 
 export const App = () => {
   // const { data } = useSuspenseQuery({
@@ -21,19 +23,19 @@ export const App = () => {
   //   queryFn: () => getWeather({ lat: 50, lon: 50 }) as Promise<unknown>,
   // });
 
-  const [coords, setCoords] = useState<Coords>({
+  const [coordinates, setCoords] = useState<Coords>({
     lat: 50,
     lon: 50,
   });
 
-  const [location, setLocation] = useState<Geocode | string>("New York");
+  const [location, setLocation] = useState<string>("New York");
+
+  const [mapType, setMapType] = useState<string>("clouds_new");
 
   // Tanstack React Query for fetching geocode data based on the location
-  const { data } = useQuery({
+  const { data: geocodeData } = useQuery({
     queryKey: ["geocode", location],
-    queryFn: () =>
-      // getGeocode({ cityName: location as string }) as Promise<Geocode>,
-      getGeocode({ cityName: location as string }),
+    queryFn: () => getGeocode({ cityName: location }),
   });
 
   // console.log("Location data:", data);
@@ -41,7 +43,15 @@ export const App = () => {
   // Function to handle map click events and set the coordinates - passed down as props
   const onMapClick = (lat: number, lon: number) => {
     setCoords({ lat, lon });
+    setLocation("custom");
   };
+
+  const coords =
+    location === "custom"
+      ? coordinates
+      : { lat: geocodeData?.[0].lat ?? 0, lon: geocodeData?.[0].lon ?? 0 };
+
+  console.log(location);
 
   return (
     <>
@@ -49,10 +59,22 @@ export const App = () => {
         {/* <Card title="Current weather">
           {JSON.stringify(data?.current, null, 2)}
         </Card> */}
-        <Map coords={coords} onMapClick={onMapClick} />
-        <LocationDropdown />
+        <div className="flex gap-4">
+          <div className="flex gap-2 flex-col">
+            <h1>Location</h1>
+            <LocationDropdown location={location} setLocation={setLocation} />
+          </div>
+          <div className="flex gap-2 flex-col">
+            <h1>Map type</h1>
+            <MapTypeDropdown mapType={mapType} setMapType={setMapType} />
+          </div>
+        </div>
+        <div className="relative w-full">
+          <Map coords={coords} onMapClick={onMapClick} mapType={mapType} />
+          <MapLegend mapType={mapType} />
+        </div>
         <CurrentWeather
-          title="Current weather"
+          title={`Current weather for ${location}`}
           coords={coords}
         ></CurrentWeather>
         <DailyForecast title="Daily forecast" coords={coords}></DailyForecast>

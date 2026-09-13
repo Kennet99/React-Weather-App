@@ -9,8 +9,3 @@ export type WeatherComponent = {
   coords: Coords;
   //   onMapClick?: (lat: number, lon: number) => void;
 };
-
-export type Map = {
-  coords: Coords;
-  onMapClick: (lat: number, lon: number) => void;
-};

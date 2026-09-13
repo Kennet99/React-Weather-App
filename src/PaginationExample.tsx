@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+/*import React, { useState, useEffect } from "react";
 import { AccountsService } from "./generated/services/AccountsService";
 import type { IAccount } from "./generated/models/AccountModel";
 
@@ -52,8 +52,6 @@ export const ServerPagedGrid: React.FC<{ searchTerm: string }> = ({
           ))}
         </ul>
       )}
-
-      {/* Pagination Controls */}
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <button
           disabled={page === 1 || loading}
@@ -74,3 +72,4 @@ export const ServerPagedGrid: React.FC<{ searchTerm: string }> = ({
     </div>
   );
 };
+*/
