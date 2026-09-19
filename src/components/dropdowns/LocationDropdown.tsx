@@ -38,8 +38,8 @@ export default function LocationDropdown({
         <SelectValue placeholder="Select City" />
       </SelectTrigger>
       <SelectContent className="z-1001">
-        {location === "custom" && (
-          <SelectItem value="custom">Custom</SelectItem>
+        {location === "Custom" && (
+          <SelectItem value="Custom">Custom</SelectItem>
         )}
         <SelectGroup>
           {Cities.map((item) => (

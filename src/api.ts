@@ -1,5 +1,9 @@
 import { weatherSchema, type WeatherSchema } from "./schemas/weatherSchema";
 import { GeocodeSchema, type Geocode } from "./schemas/geocodeSchema";
+import {
+  AirPollutionSchema,
+  type AirPollution,
+} from "./schemas/airPollutionSchema";
 
 type Coords = {
   lat: number;
@@ -56,5 +60,21 @@ export async function getGeocode({
     return GeocodeSchema.parse(data);
   } catch (error) {
     console.error("Error fetching geocode data:", error);
+  }
+}
+
+export async function getAirPollution({
+  lat,
+  lon,
+}: Coords): Promise<AirPollution | undefined> {
+  try {
+    const result = await fetch(
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_Key}`,
+    );
+    const data = await result.json();
+    console.log("Air pollution data:", AirPollutionSchema.parse(data));
+    return AirPollutionSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching air pollution data:", error);
   }
 }
