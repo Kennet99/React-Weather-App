@@ -101,6 +101,7 @@ function AirPollution({ lat, lon }: Coords) {
 
           const max = Math.max(pollutant["Very Poor"].min, value);
 
+          //   Loop over the pollutant levels to determine the current level
           const currentLevel = (() => {
             for (const [level, range] of Object.entries(pollutant)) {
               if (
@@ -162,6 +163,7 @@ function AirPollution({ lat, lon }: Coords) {
                 <p>{max}</p>
               </div>
               <div className="flex gap-1">
+                {/* Render the color-coded quality levels for the pollutant */}
                 {Object.keys(pollutant).map((quality) => (
                   <span
                     key={quality}
