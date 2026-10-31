@@ -1,8 +1,29 @@
-## YouTube Tutorial
+# About this project
 
-https://www.youtube.com/watch?v=M-iV9R3kLNA&t=16674s
+This is a weather app based off this tutorial from Austin Davis: https://www.youtube.com/watch?v=M-iV9R3kLNA&t=16674s.
 
-# React + TypeScript + Vite
+**This project is for me to learn the following:**
+
+- React with TypeScript
+- TanStack Query & fetching
+- Custom hooks
+- Tailwind with clsx
+- Testing with Vitest
+- Using shadcn components
+
+> I have intentionally not made the app responsive and sacrificed some aesthetics because I want to focus on nailing the logic. This code has been hand written but I have also lightly used AI to assist with debugging and expediting some boilerplate (mainly with tab autocomplete).
+
+**What's next for me to learn / implement:**
+
+- [] Error boundaries
+- [] Make the app responsive
+- [] Introduce motion
+
+<br>
+
+# Setup (boilerplate)
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
