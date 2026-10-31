@@ -19,9 +19,9 @@ This is a weather app based off this tutorial from Austin Davis: https://www.you
 - [] Make the app responsive
 - [] Introduce motion
 
-<br>
+<!-- <br> -->
 
-# Setup (boilerplate)
+<!-- # Setup (boilerplate)
 
 ## React + TypeScript + Vite
 
@@ -103,4 +103,4 @@ export default defineConfig([
 ## Running tests
 
 Run `npm test` to start Vitest in watch mode, or `npm test -- --run` to run the
-tests once.
+tests once. -->
