@@ -38,7 +38,7 @@ export const App = () => {
 
   const [mapType, setMapType] = useState<string>("clouds_new");
 
-  const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(true);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(false);
 
   // Tanstack React Query for fetching geocode data based on the location
   const { data: geocodeData } = useQuery({

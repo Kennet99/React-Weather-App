@@ -1,6 +1,4 @@
-// import { describe, it, expect } from "vitest";
 import CurrentWeather from "../components/cards/CurrentWeather";
-// import { render } from "vitest-browser-react/pure";
 import { render } from "vitest-browser-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
